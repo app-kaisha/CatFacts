@@ -46,25 +46,25 @@ struct DetailView: View {
                     .foregroundStyle(.secondary)
             }
             
-            // https://upload.wikimedia.org/wikipedia/commons/9/9b/Gustav_chocolate.jpg
-                VStack {
-                    AsyncImage(url: URL(string: "https://upload.wikimedia.org/wikipedia/commons/9/9b/Gustav_chocolate.jpg")) { image in
-                        image
-                            .resizable()
-                            .scaledToFit()
-                        
-                    } placeholder: {
-                        Image(systemName: "rectangle.slash")
-                            .resizable()
-                            .scaledToFit()
-                            .foregroundStyle(.secondary)
-                            .fontWeight(.thin)
-                            .frame(height: 200)
-                            .frame(maxWidth: .infinity)
-                        Text("Image Not Available")
-                    }
+            VStack {
+                //AsyncImage(url: URL(string: "https://upload.wikimedia.org/wikipedia/commons/9/9b/Gustav_chocolate.jpg")) {
+                AsyncImage(url: URL(string: ImageURL.breedImages[cat.breed] ?? "")) {image in
+                    image
+                        .resizable()
+                        .scaledToFit()
                     
+                } placeholder: {
+                    Image(systemName: "rectangle.slash")
+                        .resizable()
+                        .scaledToFit()
+                        .foregroundStyle(.secondary)
+                        .fontWeight(.thin)
+                        .frame(height: 200)
+                        .frame(maxWidth: .infinity)
+                    Text("Image Not Available")
                 }
+                
+            }
         }
         .font(.title2)
         .listStyle(.plain)
