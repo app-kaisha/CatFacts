@@ -11,6 +11,7 @@ import SwiftUI
 struct ListView: View {
     
     @State private var catVM = CatViewModel()
+    @State private var sheetIsShown = false
     
     var body: some View {
         NavigationStack {
@@ -29,19 +30,6 @@ struct ListView: View {
                     }
                 }
                 .listStyle(.plain)
-                .navigationTitle("Cat Breeds:")
-                .toolbar {
-                    ToolbarItem(placement: .status) {
-                        Text("\(catVM.breeds.count) of \(catVM.total) breeds")
-                    }
-                    ToolbarItem(placement: .bottomBar) {
-                        Button("Load All") {
-                            Task {
-                                await catVM.loadAll()
-                            }
-                        }
-                    }
-                }
                 
                 if catVM.isLoading {
                     ProgressView()
@@ -49,6 +37,33 @@ struct ListView: View {
                         .scaleEffect(4)
                 }
             }
+            .navigationTitle("Cat Breeds:")
+            .toolbar {
+                ToolbarItem(placement: .status) {
+                    Text("\(catVM.breeds.count) of \(catVM.total) breeds")
+                }
+                ToolbarItem(placement: .bottomBar) {
+                    Button("Load All") {
+                        Task {
+                            await catVM.loadAll()
+                        }
+                    }
+                }
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        sheetIsShown.toggle()
+                    } label: {
+                        Text("🐈‍⬛")
+                        Image(systemName: "lightbulb.fill")
+                    }
+                    .buttonStyle(.bordered)
+
+                }
+            }
+ 
+        }
+        .sheet(isPresented: $sheetIsShown) {
+            FactView()
         }
         .task {
             await catVM.getData()
