@@ -24,10 +24,16 @@ struct ListView: View {
             }
             .listStyle(.plain)
             .navigationTitle("Cat Breeds:")
+            .toolbar {
+                ToolbarItem(placement: .status) {
+                    Text("\(catVM.breeds.count) of \(catVM.total) breeds")
+                }
+            }
         }
         .task {
             await catVM.getData()
         }
+
     }
 }
 

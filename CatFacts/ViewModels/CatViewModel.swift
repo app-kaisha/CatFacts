@@ -13,10 +13,12 @@ class CatViewModel {
     
     private struct Returned: Codable {
         var data: [CatBreed]
+        var total: Int
     }
     
     var urlString = "https://catfact.ninja/breeds"
     var breeds: [CatBreed] = []
+    var total: Int = 0
     
     var isLoading = false
     
@@ -46,6 +48,7 @@ class CatViewModel {
             print("😎 JSON returned! Cat Count: \(returned.data.count)")
             Task { @MainActor in
                 self.breeds = returned.data
+                self.total = returned.total
                 
                 isLoading = false
             }
