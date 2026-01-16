@@ -9,7 +9,7 @@
 
 import Foundation
 
-struct CatBreeds: Codable, Identifiable {
+struct CatBreed: Codable, Identifiable {
     let id = UUID().uuidString
 
     var breed: String

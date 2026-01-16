@@ -15,8 +15,15 @@ struct ListView: View {
     var body: some View {
         NavigationStack {
             List(catVM.breeds) { cat in
-                Text(cat.breed)
+                NavigationLink {
+                    DetailView(cat: cat)
+                } label: {
+                    Text(cat.breed)
+                        .font(.title2)
+                }
             }
+            .listStyle(.plain)
+            .navigationTitle("Cat Breeds:")
         }
         .task {
             await catVM.getData()

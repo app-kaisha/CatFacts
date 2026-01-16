@@ -12,11 +12,11 @@ import Foundation
 class CatViewModel {
     
     private struct Returned: Codable {
-        var data: [CatBreeds]
+        var data: [CatBreed]
     }
     
     var urlString = "https://catfact.ninja/breeds"
-    var breeds: [CatBreeds] = []
+    var breeds: [CatBreed] = []
     
     var isLoading = false
     
