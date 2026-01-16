@@ -14,8 +14,59 @@ struct DetailView: View {
     
     var body: some View {
         List {
+            HStack {
+                Text("Country")
+                    .bold()
+                Spacer()
+                Text("\(cat.country)")
+                    .foregroundStyle(.secondary)
+            }
             
+            HStack {
+                Text("Origin")
+                    .bold()
+                Spacer()
+                Text("\(cat.origin)")
+                    .foregroundStyle(.secondary)
+            }
+            
+            HStack {
+                Text("Coat")
+                    .bold()
+                Spacer()
+                Text("\(cat.coat)")
+                    .foregroundStyle(.secondary)
+            }
+            
+            HStack {
+                Text("Pattern")
+                    .bold()
+                Spacer()
+                Text("\(cat.pattern)")
+                    .foregroundStyle(.secondary)
+            }
+            
+            // https://upload.wikimedia.org/wikipedia/commons/9/9b/Gustav_chocolate.jpg
+                VStack {
+                    AsyncImage(url: URL(string: "https://upload.wikimedia.org/wikipedia/commons/9/9b/Gustav_chocolate.jpg")) { image in
+                        image
+                            .resizable()
+                            .scaledToFit()
+                        
+                    } placeholder: {
+                        Image(systemName: "rectangle.slash")
+                            .resizable()
+                            .scaledToFit()
+                            .foregroundStyle(.secondary)
+                            .fontWeight(.thin)
+                            .frame(height: 200)
+                            .frame(maxWidth: .infinity)
+                        Text("Image Not Available")
+                    }
+                    
+                }
         }
+        .font(.title2)
         .listStyle(.plain)
         .navigationTitle("\(cat.breed)")
     }
@@ -23,6 +74,6 @@ struct DetailView: View {
 
 #Preview {
     NavigationStack {
-        DetailView(cat: CatBreed(breed: "Tiger", country: "UK", origin: "Africa", coat: "Shiney", pattern: "Patchy"))
+        DetailView(cat: CatBreed(breed: "Burmese", country: "Burma & Thailand", origin: "Natural", coat: "Short", pattern: "Solid"))
     }
 }
