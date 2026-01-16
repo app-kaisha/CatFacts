@@ -13,6 +13,9 @@ struct CatFactsApp: App {
     var body: some Scene {
         WindowGroup {
             ListView()
+                .onAppear {
+                    Thread.sleep(forTimeInterval: 3)
+                }
         }
     }
 }
