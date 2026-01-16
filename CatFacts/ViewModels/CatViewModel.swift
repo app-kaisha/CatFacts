@@ -14,6 +14,7 @@ class CatViewModel {
     private struct Returned: Codable {
         var data: [CatBreed]
         var total: Int
+        var next_page_url: String?
     }
     
     var urlString = "https://catfact.ninja/breeds"
@@ -47,15 +48,36 @@ class CatViewModel {
             // Confirm data was decoded:
             print("😎 JSON returned! Cat Count: \(returned.data.count)")
             Task { @MainActor in
-                self.breeds = returned.data
+                self.breeds = self.breeds + returned.data
                 self.total = returned.total
-                
+                self.urlString = returned.next_page_url ?? ""
                 isLoading = false
             }
         } catch {
             isLoading = false
             print("😡 ERROR: Could not get data from \(urlString) \(error.localizedDescription)")
         }
+    }
+    
+    func loadNextIfNeeded(catBreed: CatBreed) async {
+        guard let lastCat = breeds.last else { return }
+        
+        if catBreed.id == lastCat.id && urlString != "" {
+            await getData()
+        }
+    }
+    
+    func loadAll() async {
+        Task { @MainActor in
+            
+            guard urlString != "" else { return }
+            
+            await getData()
+            // recurssive
+            await loadAll()
+            
+        }
+        
     }
     
 }
